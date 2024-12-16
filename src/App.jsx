@@ -1,34 +1,87 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import React, { createContext, useState } from "react";
+import './app.css'
+import Loading from "./components/Loading/loading";
+import Bar from "./components/Bar/bar";
+import Questions from "./components/Questions/questions";
+import audios from './audio.mp3'
+
+export const GlobalState = createContext();
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [load, setLoad] = useState(true);
+  const [point, setPoint] = useState(0);
+  const [pressButton, setPressButton] = useState(false);
+  const [open, setOpen] = useState(false)
+  let audio = new Audio(audios)
+
+  const start = () => {
+    audio.loop = true
+    audio.play()
+
+  }
+
+  setTimeout(() => {
+    setLoad(false)
+  }, 5000)
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+    <GlobalState.Provider value={{point, setPoint}}>
+      <div className="container">
+        <div className="containerBg">
+          <img src="/rb_156536.png" alt="bg" />
+        </div>
+        {
+          load &&
+          <Loading />
+        }
+        {
+          !pressButton && !load &&
+          <div className="containerButton">
+            <div onClick={() => {setPressButton(true); start();}}>
+              <span>START</span>
+              <img src="/rb_48692.png" alt="Button" />
+            </div>
+          </div>
+        }
+        {
+          pressButton && point < 3 &&
+          <div className="containerGame">
+            <Bar />
+            {
+              point < 3 &&
+              <Questions />
+            }
+          </div>
+        }
+        {
+          point === 3 &&
+          <div className="containerAirWrap">
+            <span>HAI VINTO!</span>
+            <div className="airWrap">
+              {!open && <img src="/mail_7286125.png" alt="Mail close" onClick={() => {
+                setTimeout(() => {
+                    setPoint(4)
+                }, 2000)
+                setOpen(true);
+                }} />}
+              {open && <img src="/mail_3744367.png" alt="Mail close" />}
+            </div>
+          </div>
+        }
+        {
+          point === 4 &&
+        <div className="containerLetter">
+          <img className="yago" src="/ele-incazzata-removebg-preview.png" alt="Yago" />
+          <div>
+            Tanti Auguri di Natale amore mio!
+            Siccome quest'anno hai fatto la brava
+            ecco qua il premio per un quiz difficilissimo!
+            <img className="premio" src="/premio-removebg-preview.png" alt="Air Wrap"></img>
+          </div>
+        </div>
+        }
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+    </GlobalState.Provider>
   )
 }
 

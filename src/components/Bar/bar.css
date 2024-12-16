@@ -1,0 +1,83 @@
+.containerBar {
+	width: 300px;
+	height: 5px;
+	background-color: #FFF0A5;
+	position: relative;
+	border-radius: 6px;
+}
+
+.progressBar1 {
+	position: absolute;
+	width: 300px;
+	height: 5px;
+	left: 0;
+	top: 0;
+	background-color: #FFB03B;
+	width: 30%;
+	z-index: 10;
+}
+
+.progressBar2 {
+	position: absolute;
+	width: 300px;
+	height: 5px;
+	left: 0;
+	top: 0;
+	background-color: #FFB03B;
+	width: 60%;
+	z-index: 10;
+}
+
+.progressBar3 {
+	position: absolute;
+	width: 300px;
+	height: 5px;
+	left: 0;
+	top: 0;
+	background-color: #FFB03B;
+	width: 100%;
+	z-index: 10;
+}
+
+.containerBalls {
+	position: absolute;
+	top: -20px;
+	left: 0;
+	width: 100%;
+	display: flex;
+	justify-content: space-between;
+}
+
+.ball {
+	width: 40px;
+	height: 40px;
+	position: relative;
+	z-index: 12;
+}
+
+.ballGreen {
+	width: 40px;
+	height: 40px;
+	position: relative;
+	z-index: 12;
+	animation: tintinnio 1s forwards;
+	transform-origin: bottom center;
+}
+
+@keyframes tintinnio {
+	0% {
+		transform: rotate(0deg);
+	}
+	25% {
+		transform: rotate(10deg);
+	}
+	50% {
+		transform: rotate(0deg);
+	}
+	75% {
+		transform: rotate(-10deg);
+	}
+	100% {
+		transform: rotate(0deg);
+	}
+}
